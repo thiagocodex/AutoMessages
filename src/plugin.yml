@@ -1,0 +1,8 @@
+api-version: "1.13"
+author: "Thiago 'Codex' Silva"
+commands:
+  am:
+    description: "Reloads automessages config, and reloads plugin"
+main: "me.thiagocodex.automessages.AutoMessages"
+name: "AutoMessages"
+version: "1.0.0"
