@@ -10,7 +10,7 @@ Set up automatic messages for online players, clickable, eventeable, command mes
 &nbsp;
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Need a host? This is the best! For me, ping 0-5ms, mostly 0ms
-[![](https://apexminecrafthosting.com/images/apex-hosting-mobile.png)](https://billing.apexminecrafthosting.com/aff.php?aff=2030)
+[![](https://cdn.apexminecrafthosting.com/img/theme/apex-hosting-mobile.png)](https://billing.apexminecrafthosting.com/aff.php?aff=2030)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tested for an year, 99% uptime, for many countries, awesome support
 
@@ -45,6 +45,6 @@ If your server is on, stop it using the /stop command or stop command from the c
     
 &nbsp;
 
-[![](https://apexminecrafthosting.com/images/apex-hosting-skyscrapper.png)](https://billing.apexminecrafthosting.com/aff.php?aff=2030)
+[![](https://cdn.apexminecrafthosting.com/img/theme/apex-hosting-skyscrapper.png)](https://billing.apexminecrafthosting.com/aff.php?aff=2030)
 
-[what are people saying](https://apexminecrafthosting.com/testimonials/)
+[what people are saying](https://apexminecrafthosting.com/testimonials/)
