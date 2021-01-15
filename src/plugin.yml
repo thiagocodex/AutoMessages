@@ -5,4 +5,4 @@ commands:
     description: "Reloads automessages config, and reloads plugin"
 main: "me.thiagocodex.automessages.AutoMessages"
 name: "AutoMessages"
-version: "1.0.0"
+version: "1.0.1"

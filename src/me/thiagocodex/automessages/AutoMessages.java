@@ -7,6 +7,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class AutoMessages extends JavaPlugin {
     @Override
     public void onEnable() {
+
+
+        new News().getVersion();
+
+        getServer().getPluginManager().registerEvents(new News(), this);
         getCommand("am").setExecutor(new Commands());
         try {
             CustomConfig.createFiles();
@@ -15,6 +20,7 @@ public class AutoMessages extends JavaPlugin {
         }
         CustomConfig.load();
         getServer().getConsoleSender().sendMessage(CustomConfig.color("&aAutoMessages enabled!"));
+        CheckLatest.writeInConsole();
         PrintTask.start();
         Text.get();
     }
