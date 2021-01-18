@@ -68,7 +68,7 @@ abstract class CustomConfig {
                     "    URL1: https://www.twitch.tv/thiagocodex\n" +
                     "    URL2: https://www.youtube.com/channel/UCEDjQf5cEkH4320GevAitUA?sub_confirmation=1\n" +
                     "    URL3: https://www.facebook.com/thecoders/\n" +
-                    "    URL4: https://discord.gg/ZMbDcFgJ8Q\n" +
+                    "    URL4: https://discord.gg/3HTqPFDBmT\n" +
                     "\n" +
                     "#Sound to play when message appear\n" +
                     "    Sound: UI_TOAST_IN #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html\n" +

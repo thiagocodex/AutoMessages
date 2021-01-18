@@ -14,7 +14,6 @@ class PrintTask extends CustomConfig {
     static BukkitTask bukkitTask;
     static List<ComponentBuilder> componentBuilders = new ArrayList<>();
     static List<Sound> sounds = new ArrayList<>();
-
     static int count = 0;
 
     static void start() {

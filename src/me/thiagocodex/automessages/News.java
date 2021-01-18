@@ -1,40 +1,23 @@
 package me.thiagocodex.automessages;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 
 public class News extends CustomConfig implements Listener {
     private static HttpURLConnection httpURLConnection;
     private static String stringVersion;
-    private static String isAnnounceSession;
-
-    BufferedReader in(String url) {
-        try {
-            BufferedReader br;
-            URL url1 = new URL(url);
-
-
-            br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            return br;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     float getVersion() {
         try {
@@ -49,27 +32,22 @@ public class News extends CustomConfig implements Listener {
             while ((inputLine = in.readLine()) != null) stringBuilder.append(inputLine);
             in.close();
             int version = Integer.parseInt(stringBuilder.toString().replaceAll("%", "").replaceAll("\\.", ""));
-            stringVersion = stringBuilder.toString().replaceAll("%", ""); //1.0.1
-            if (Integer.parseInt(plugin.getDescription().getVersion() //100
+            stringVersion = stringBuilder.toString().replaceAll("%", "");
+            if (Integer.parseInt(plugin.getDescription().getVersion()
                     .replaceAll("%", "")
                     .replaceAll("\\.", "")) < version) {
-                CheckLatest.message = ChatColor.YELLOW + "[AutoMessages]" + ChatColor.RED + " You don't have the latest version.";
+                CheckLatest.message = ChatColor.RED + " You don't have the latest version";
             } else {
-                CheckLatest.message = ChatColor.YELLOW + "[AutoMessages]" + ChatColor.GREEN + " You have the latest version.";
+                CheckLatest.message = ChatColor.GREEN + "    You have the latest version   ";
             }
             return version;
         } catch (IOException e) {
-            stringVersion = " §eDon't worry, can't connect to db!§r";
+            CheckLatest.message = ChatColor.YELLOW + " Don't worry, can't connect to db!";
         } finally {
             httpURLConnection.disconnect();
         }
         return 0;
-
-
-
-
     }
-
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -77,8 +55,19 @@ public class News extends CustomConfig implements Listener {
             if (Integer.parseInt(plugin.getDescription().getVersion()
                     .replaceAll("%", "")
                     .replaceAll("\\.", "")) < getVersion()) {
-                event.getPlayer().sendMessage(
-                        CheckLatest.message + "\n" + ChatColor.WHITE + "Current: " + ChatColor.YELLOW +  plugin.getDescription().getVersion() + "\n" + ChatColor.WHITE +"Latest: " + ChatColor.GREEN + stringVersion + "\nhttps://www.spigotmc.org/resources/automessages.85483/");
+                ComponentBuilder componentBuilder = new ComponentBuilder("");
+                TextComponent textComponent = new TextComponent();
+                textComponent.setText(
+                        "\n§aAutoMessages: §cThere is a new version available\n" +
+                                "§eCurrent: " + plugin.getDescription().getVersion() + "\n" +
+                                "§aAvailable: " + stringVersion + "\n" +
+                                "§cClick §bhere §cto download\n");
+                HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("https://www.spigotmc.org/resources/automessages.85483/").create());
+                textComponent.setHoverEvent(hoverEvent);
+                ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/automessages.85483/");
+                textComponent.setClickEvent(clickEvent);
+                componentBuilder.append(textComponent);
+                event.getPlayer().spigot().sendMessage(componentBuilder.create());
             }
         }
     }
