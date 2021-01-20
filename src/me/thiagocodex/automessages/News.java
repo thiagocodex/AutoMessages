@@ -18,8 +18,28 @@ import java.net.URL;
 public class News extends CustomConfig implements Listener {
     private static HttpURLConnection httpURLConnection;
     private static String stringVersion;
+    private final AutoMessages autoMessages = AutoMessages.getPlugin(AutoMessages.class);
 
-    float getVersion() {
+    static String showNews() {
+        try {
+            StringBuilder news = new StringBuilder();
+            URL url = new URL("https://raw.githubusercontent.com/thiagocodex/AutoMessages/main/ANNOUNCE");
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setConnectTimeout(3000);
+            httpURLConnection.setReadTimeout(3000);
+            BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            boolean isShow = in.readLine().equalsIgnoreCase("Enabled: true");
+            String inputLine;
+            while ((isShow && (inputLine = in.readLine()) != null)) news.append(inputLine.replace("Enabled: true", ""));
+            in.close();
+            return news.toString();
+        } catch (IOException e) {
+            return "Don't worry, can't connect to db!";
+        }
+    }
+
+    static float getVersion() {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             URL url = new URL("https://raw.githubusercontent.com/thiagocodex/AutoMessages/main/VERSION");
@@ -36,9 +56,9 @@ public class News extends CustomConfig implements Listener {
             if (Integer.parseInt(plugin.getDescription().getVersion()
                     .replaceAll("%", "")
                     .replaceAll("\\.", "")) < version) {
-                CheckLatest.message = ChatColor.RED + " You don't have the latest version";
+                CheckLatest.message = ChatColor.RED + " You don't have the latest version.";
             } else {
-                CheckLatest.message = ChatColor.GREEN + "    You have the latest version   ";
+                CheckLatest.message = ChatColor.GREEN + "    You have the latest version!   ";
             }
             return version;
         } catch (IOException e) {
@@ -51,6 +71,17 @@ public class News extends CustomConfig implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        if (config.getBoolean("ShowNews")) {
+            ComponentBuilder componentBuilder = new ComponentBuilder("");
+            TextComponent textComponent = new TextComponent();
+            textComponent.setText("\n" + autoMessages.prefix + " " + color(showNews()) + "\n");
+            HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("https://github.com/thiagocodex/Discord_Bot").create());
+            textComponent.setHoverEvent(hoverEvent);
+            ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/thiagocodex/Discord_Bot");
+            textComponent.setClickEvent(clickEvent);
+            componentBuilder.append(textComponent);
+            event.getPlayer().spigot().sendMessage(componentBuilder.create());
+        }
         if (event.getPlayer().isOp()) {
             if (Integer.parseInt(plugin.getDescription().getVersion()
                     .replaceAll("%", "")
@@ -58,7 +89,7 @@ public class News extends CustomConfig implements Listener {
                 ComponentBuilder componentBuilder = new ComponentBuilder("");
                 TextComponent textComponent = new TextComponent();
                 textComponent.setText(
-                        "\n§aAutoMessages: §cThere is a new version available\n" +
+                        "\n" + autoMessages.prefix + " §cThere is a new version available\n" +
                                 "§eCurrent: " + plugin.getDescription().getVersion() + "\n" +
                                 "§aAvailable: " + stringVersion + "\n" +
                                 "§cClick §bhere §cto download\n");

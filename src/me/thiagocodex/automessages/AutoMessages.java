@@ -1,13 +1,16 @@
 package me.thiagocodex.automessages;
 
-import java.io.IOException;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+
 public class AutoMessages extends JavaPlugin {
+    String prefix;
+    String enabled;
+    String reload;
+
     @Override
     public void onEnable() {
-        new News().getVersion();
         getServer().getPluginManager().registerEvents(new News(), this);
         getCommand("am").setExecutor(new Commands());
         try {
@@ -16,16 +19,31 @@ public class AutoMessages extends JavaPlugin {
             e.printStackTrace();
         }
         CustomConfig.load();
+        load();
+        if (getConfig().getBoolean("ShowNews")) {
+            News.showNews();
+        }
+        News.getVersion();
+        getServer().getConsoleSender().sendMessage(prefix + " " + enabled);
         getServer().getConsoleSender().sendMessage(CustomConfig.color(
                 "\n\n" +
                         "+-----------------------------------------------+\n" +
-                        "|       §aAutoMessages by: thiagocodex#2280       §r|\n" +
+                        "|      " + prefix + "§a by: thiagocodex#2280      §r|\n" +
                         "+-----------------------------------------------+\n" +
                         "|          §7STATUS:            §a§nENABLED§r           |\n" +
                         "+-----------------------------------------------+\n" +
-                        "|      " + CheckLatest.message + "       §r|\n" +
+                        "|      " + CheckLatest.message + "      §r|\n" +
                         "+-----------------------------------------------+\n"));
         PrintTask.start();
         Text.get();
+    }
+
+    public void load() {
+        try {
+            CustomConfig.createFiles();
+            CustomConfig.reloadConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
