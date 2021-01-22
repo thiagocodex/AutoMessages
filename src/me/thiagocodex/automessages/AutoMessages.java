@@ -11,6 +11,7 @@ public class AutoMessages extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new FutureRequest().getNewsMessage();
         getServer().getPluginManager().registerEvents(new News(), this);
         getCommand("am").setExecutor(new Commands());
         try {
@@ -20,25 +21,22 @@ public class AutoMessages extends JavaPlugin {
         }
         CustomConfig.load();
         load();
-        if (getConfig().getBoolean("ShowNews")) {
-            News.showNews();
-        }
-        News.getVersion();
         getServer().getConsoleSender().sendMessage(prefix + " " + enabled);
+
         getServer().getConsoleSender().sendMessage(CustomConfig.color(
                 "\n\n" +
                         "+-----------------------------------------------+\n" +
                         "|      " + prefix + "§a by: thiagocodex#2280      §r|\n" +
                         "+-----------------------------------------------+\n" +
-                        "|          §7STATUS:            §a§nENABLED§r           |\n" +
+                        "|          §7STATUS:            §aENABLED§r           |\n" +
                         "+-----------------------------------------------+\n" +
-                        "|      " + CheckLatest.message + "      §r|\n" +
+                        "|      " + News.versionMessage + "      §r|\n" +
                         "+-----------------------------------------------+\n"));
         PrintTask.start();
-        Text.get();
+        TextFormat.get();
     }
 
-    public void load() {
+    void load() {
         try {
             CustomConfig.createFiles();
             CustomConfig.reloadConfig();

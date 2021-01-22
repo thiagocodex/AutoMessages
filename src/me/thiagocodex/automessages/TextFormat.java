@@ -8,9 +8,10 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Sound;
 
-class Text extends CustomConfig {
+class TextFormat extends CustomConfig {
     static void get() {
         String keys = getConfig().getKeys(true).toString();
         String[] subsKeys = keys.replaceAll("AutoMessages\\.", "").replaceAll("[]\\[]", "").split(", ");
@@ -36,7 +37,7 @@ class Text extends CustomConfig {
                     textComponent.setText(color(word).replaceAll("&h", "").replaceAll("&u", "").replaceAll("&p", ""));
                     if (word.contains("&h")) {
                         String hover = getConfig().getString("AutoMessages." + onlyNumbers.get(i) + ".Hover" + hoverIndex);
-                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(color(hover)).create()));
+                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color(hover))));
                         hoverIndex++;
                     }
                     if (word.contains("&u")) {

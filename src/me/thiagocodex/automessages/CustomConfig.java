@@ -14,19 +14,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 abstract class CustomConfig {
-    public static void reloadConfig() {
-        plugin.prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("AutoMessages.Prefix"));
-        plugin.enabled = ChatColor.translateAlternateColorCodes('&', getConfig().getString("AutoMessages.Enabled"));
-        plugin.reload = ChatColor.translateAlternateColorCodes('&', getConfig().getString("AutoMessages.Reloaded"));
-    }
+    static final AutoMessages plugin = AutoMessages.getPlugin(AutoMessages.class);
+    static File configFile = new File(plugin.getDataFolder(), "config.yml");
+    static FileConfiguration config;
 
     static String color(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);
     }
-
-    static final AutoMessages plugin = AutoMessages.getPlugin(AutoMessages.class);
-    static File configFile = new File(plugin.getDataFolder(), "config.yml");
-    static FileConfiguration config;
 
     static void createFiles() throws IOException {
         if (Files.notExists(plugin.getDataFolder().toPath())) {
@@ -36,6 +30,12 @@ abstract class CustomConfig {
             Files.createFile(configFile.toPath());
             writeContent();
         }
+    }
+
+    static void reloadConfig() {
+        plugin.prefix = color(getConfig().getString("AutoMessages.Prefix"));
+        plugin.enabled = color(getConfig().getString("AutoMessages.Enabled"));
+        plugin.reload = color(getConfig().getString("AutoMessages.Reloaded"));
     }
 
     static FileConfiguration getConfig() {

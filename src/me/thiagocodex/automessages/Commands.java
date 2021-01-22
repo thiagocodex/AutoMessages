@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class Commands implements CommandExecutor {
+class Commands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 1) {
@@ -16,7 +16,7 @@ public class Commands implements CommandExecutor {
                         CustomConfig.plugin.load();
                         PrintTask.bukkitTask.cancel();
                         PrintTask.start();
-                        Text.get();
+                        TextFormat.get();
                         commandSender.sendMessage(CustomConfig.plugin.prefix + " " + CustomConfig.plugin.reload);
                     }
                 } else {

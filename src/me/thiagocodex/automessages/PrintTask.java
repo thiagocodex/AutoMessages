@@ -11,14 +11,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 class PrintTask extends CustomConfig {
+
+    static String delay;
+    static String period;
     static BukkitTask bukkitTask;
     static List<ComponentBuilder> componentBuilders = new ArrayList<>();
     static List<Sound> sounds = new ArrayList<>();
     static int count = 0;
 
     static void start() {
-        String delay = getConfig().getString("AutoMessages.StartDelayInSeconds");
-        String period = getConfig().getString("AutoMessages.DelayInSeconds");
+        delay = getConfig().getString("AutoMessages.StartDelayInSeconds");
+        period = getConfig().getString("AutoMessages.DelayInSeconds");
         bukkitTask = new BukkitRunnable() {
             @Override
             public void run() {
@@ -33,6 +36,7 @@ class PrintTask extends CustomConfig {
                         }
                     }
                 }
+
                 if (componentBuilders.size() > 0) {
                     count++;
                 }
@@ -40,6 +44,6 @@ class PrintTask extends CustomConfig {
                     count = 0;
                 }
             }
-        }.runTaskTimerAsynchronously(plugin, Integer.parseInt(delay) * 20, Integer.parseInt(period) * 20);
+        }.runTaskTimerAsynchronously(plugin, Long.parseLong(delay) * 20, Long.parseLong(period) * 20);
     }
 }
