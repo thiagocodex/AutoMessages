@@ -59,7 +59,7 @@ public class News extends CustomConfig implements Listener {
             }
         } catch (IOException e) {
             version = 0;
-            versionMessage = "Don't worry, can't connect to db!";
+            versionMessage = ChatColor.YELLOW + "  Don't worry, can't connect to db!";
         } finally {
             httpURLConnection.disconnect();
         }
